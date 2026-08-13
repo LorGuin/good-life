@@ -1,6 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { getFirestore, collection, getDocs, addDoc, doc, deleteDoc } from "firebase/firestore";
-import { getAnalytics } from "firebase/analytics";
+
 
 // Configuración leyendo desde el archivo .env
 const firebaseConfig = {
@@ -15,7 +15,7 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
+
 export const db = getFirestore(app);
 
 // Tipo de dato TypeScript
