@@ -16,10 +16,13 @@ function siteUrlPlugin(): Plugin {
 export default defineConfig({
   plugins: [siteUrlPlugin()],
   build: {
+    // Firebase (base de datos + memoria del navegador) pesa ~630 KB sin comprimir y ~186 KB
+    // comprimido; el navegador lo guarda después de la primera visita.
+    chunkSizeWarningLimit: 700,
     rolldownOptions: {
       input: {
-        main: resolve(__dirname, "index.html"),
-        admin: resolve(__dirname, "admin.html"),
+        main: resolve(import.meta.dirname, "index.html"),
+        admin: resolve(import.meta.dirname, "admin.html"),
       },
     },
   },
