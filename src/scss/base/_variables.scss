@@ -1,16 +1,26 @@
-// Fuentes
-$fuentePrincipal: 'Lato', sans-serif;
-$fuenteCursiva: 'Italianno', sans-serif;
+// Tipografía
+$fuente-titulos: 'Young Serif', Georgia, 'Times New Roman', serif;
+$fuente: 'Figtree', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
 
-// Tamaño de Media Queries
-$telefono: 480px;
+// Breakpoints
 $tablet: 768px;
 $desktop: 1024px;
 
-// Colores
-$primario: #8ed3cc;
-$secundario: #e082a8; 
-$negro: #000;
-$blanco: #FFFFFF;
-$gris: #979797;
-$grisClaro: #f8f8f8;
+// Paleta cálida: rebozado dorado, oliva y café
+$sticker: #f2b544;       // dorado miel: rótulos y círculos de marca
+$miel: #fbefd9;          // fondos de sección
+$papel: #fffaf2;         // fondo general
+$oliva: #4b6b2f;         // botones y acentos fuertes
+$oliva-hover: #3d5926;
+$cafe: #3b2a1d;          // texto principal
+$texto-suave: #7a6250;
+$brasa: #c4502b;         // detalles puntuales (foco, punto de reparto)
+$blanco: #ffffff;
+$borde: #ecdcc3;
+$peligro: #b23a26;
+$peligro-fondo: #fbe2dc;
+
+// Formas
+$radio-grande: 28px;
+$radio: 16px;
+$radio-chico: 10px;

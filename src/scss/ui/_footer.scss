@@ -1,0 +1,59 @@
+@use '../base/variables' as v;
+@use '../base/mixins' as m;
+
+.site-footer {
+    padding: 3rem 0 1.5rem;
+    background: v.$miel;
+    font-size: 0.95rem;
+}
+
+.footer-grid {
+    display: grid;
+    gap: 2rem;
+
+    @include m.tablet {
+        grid-template-columns: 1fr 1.4fr;
+        align-items: start;
+    }
+}
+
+.footer-brand {
+    display: flex;
+    gap: 0.9rem;
+    align-items: flex-start;
+
+    p {
+        color: v.$texto-suave;
+    }
+    .brand-name {
+        color: v.$oliva;
+    }
+}
+
+.footer-info {
+    margin: 0;
+    display: grid;
+    gap: 1rem;
+
+    @include m.tablet {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    dt {
+        font-size: 0.85rem;
+        color: v.$texto-suave;
+    }
+    dd {
+        margin: 0.15rem 0 0;
+        font-weight: 600;
+    }
+    a {
+        color: v.$oliva;
+    }
+}
+
+.footer-bottom {
+    margin-top: 2.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid v.$borde;
+}

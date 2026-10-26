@@ -1,0 +1,104 @@
+@use '../base/variables' as v;
+@use '../base/mixins' as m;
+
+.site-header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(255, 250, 242, 0.9);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid v.$borde;
+}
+
+.site-header-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 64px;
+}
+
+.brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    text-decoration: none;
+}
+
+.brand-mark {
+    width: 40px;
+    height: 40px;
+    flex: none;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    background: v.$sticker;
+
+    .bird {
+        width: 28px;
+        fill: v.$oliva;
+    }
+}
+
+.bird-eye {
+    fill: v.$sticker;
+}
+.bird-wing {
+    fill: none;
+    stroke: v.$sticker;
+    stroke-width: 2.4;
+    stroke-linecap: round;
+}
+.bird-legs {
+    fill: none;
+    stroke: v.$oliva;
+    stroke-width: 2;
+    stroke-linecap: round;
+}
+
+.brand-name {
+    font-family: v.$fuente-titulos;
+    font-size: 1.35rem;
+    color: v.$oliva;
+}
+
+.header-cart {
+    display: none;
+    align-items: center;
+    gap: 0.5rem;
+    border: 1.5px solid v.$borde;
+    background: v.$blanco;
+    border-radius: 999px;
+    padding: 0.5rem 0.6rem 0.5rem 1.1rem;
+    font: inherit;
+    font-weight: 700;
+    color: v.$cafe;
+    cursor: pointer;
+
+    &:hover {
+        border-color: v.$sticker;
+    }
+
+    @include m.tablet {
+        display: inline-flex;
+    }
+}
+
+.header-cart-count {
+    min-width: 28px;
+    height: 28px;
+    padding: 0 0.4rem;
+    display: inline-grid;
+    place-items: center;
+    border-radius: 999px;
+    background: v.$oliva;
+    color: v.$blanco;
+    font-size: 0.85rem;
+}
+
+.bump {
+    animation: bump 0.35s ease;
+}
+
+@keyframes bump {
+    40% { transform: scale(1.08); }
+}

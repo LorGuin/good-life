@@ -1,0 +1,53 @@
+@use '../base/variables' as v;
+@use '../base/mixins' as m;
+
+.soon {
+    background: v.$oliva;
+    color: v.$blanco;
+    padding: 3.5rem 0;
+    overflow: hidden;
+}
+
+.soon-inner {
+    position: relative;
+    display: grid;
+    gap: 1.5rem;
+    justify-items: start;
+
+    @include m.tablet {
+        grid-template-columns: auto 1fr auto;
+        align-items: center;
+        gap: 2.5rem;
+    }
+}
+
+.sticker-soon {
+    position: relative;
+    width: 108px;
+    height: 108px;
+    transform: rotate(-8deg);
+    animation: sway 5s ease-in-out infinite;
+    border-color: v.$oliva;
+    box-shadow: 0 0 0 3px v.$sticker;
+
+    .sticker-big {
+        font-size: 1.45rem;
+    }
+}
+
+@keyframes sway {
+    0%, 100% { transform: rotate(-8deg); }
+    50% { transform: rotate(6deg) translateY(-4px); }
+}
+
+.soon-copy {
+    max-width: 34rem;
+
+    h2 {
+        font-size: clamp(1.9rem, 4.5vw, 2.6rem);
+    }
+    p {
+        margin-top: 0.6rem;
+        color: rgba(255, 255, 255, 0.85);
+    }
+}

@@ -1,8 +1,15 @@
 import { initializeApp } from "firebase/app";
-import { getFirestore, collection, getDocs, addDoc, doc, deleteDoc } from "firebase/firestore";
+import {
+  getFirestore,
+  initializeFirestore,
+  persistentLocalCache,
+  persistentMultipleTabManager,
+  type Firestore,
+} from "firebase/firestore";
+import { getAuth } from "firebase/auth";
 
-
-// Configuración leyendo desde el archivo .env
+// Configuración leída desde el archivo .env
+// (estas claves son públicas por diseño: la seguridad real está en las reglas de Firestore)
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
   authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
@@ -10,64 +17,22 @@ const firebaseConfig = {
   storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
   messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
   appId: import.meta.env.VITE_FIREBASE_APP_ID,
-  measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID
+  measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID,
 };
 
-// Initialize Firebase
 const app = initializeApp(firebaseConfig);
 
-export const db = getFirestore(app);
-
-// Tipo de dato TypeScript
-export interface Product {
-  id?: string;
-  name: string;
-  description: string;
-  unitsPerTray: number;
-  unitWeightGram: number;
-  price: number;
-  imageUrl?: string;
-}
-
-// Obtener productos desde Firestore
-export async function getProducts(): Promise<Product[]> {
+// Caché en el navegador: la segunda visita muestra los datos al instante
+// y después se actualizan solos cuando llega la respuesta del servidor.
+function createDb(): Firestore {
   try {
-    const querySnapshot = await getDocs(collection(db, "products"));
-    const products: Product[] = [];
-    
-    querySnapshot.forEach((doc) => {
-      products.push({
-        id: doc.id,
-        ...doc.data()
-      } as Product);
+    return initializeFirestore(app, {
+      localCache: persistentLocalCache({ tabManager: persistentMultipleTabManager() }),
     });
-    
-    return products;
-  } catch (error) {
-    console.error("Error al obtener productos de Firestore:", error);
-    return [];
+  } catch {
+    return getFirestore(app); // navegador sin almacenamiento disponible
   }
 }
 
-// Agregar un producto
-export async function addProduct(product: Omit<Product, "id">): Promise<string> {
-  try {
-    const docRef = await addDoc(collection(db, "products"), product);
-    return docRef.id;
-  } catch (error) {
-    console.error("Error al agregar producto:", error);
-    throw error;
-  }
-}
-
-// Eliminar un producto
-export async function deleteProduct(id: string): Promise<void> {
-  try {
-    const productRef = doc(db, "products", id);
-    await deleteDoc(productRef);
-    console.log("Producto eliminado correctamente de Firestore");
-  } catch (error) {
-    console.error("Error al eliminar el producto de Firestore:", error);
-    throw error;
-  }
-}
+export const db = createDb();
+export const auth = getAuth(app);

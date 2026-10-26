@@ -1,0 +1,145 @@
+@use '../base/variables' as v;
+@use '../base/mixins' as m;
+
+.hero {
+    padding: 2.5rem 0 3.5rem;
+    background: linear-gradient(to bottom, v.$papel 0%, v.$papel 55%, v.$miel 55%);
+
+    @include m.desktop {
+        padding: 4.5rem 0 5rem;
+        background: linear-gradient(to right, v.$papel 0%, v.$papel 58%, v.$miel 58%);
+    }
+}
+
+.hero-grid {
+    display: grid;
+    gap: 2.5rem;
+    align-items: center;
+
+    @include m.desktop {
+        grid-template-columns: 1fr 1.1fr;
+        gap: 4rem;
+    }
+}
+
+.hero-copy {
+    max-width: 34rem;
+
+    // Entrada escalonada: título, texto y botones
+    > * {
+        animation: rise 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+    }
+    > :nth-child(2) { animation-delay: 0.12s; }
+    > :nth-child(3) { animation-delay: 0.24s; }
+
+    h1 {
+        font-size: clamp(2.4rem, 7vw, 4rem);
+        letter-spacing: -0.01em;
+        color: v.$cafe;
+    }
+}
+
+.hero-lead {
+    margin-top: 1.25rem;
+    font-size: 1.15rem;
+    color: v.$texto-suave;
+    max-width: 30rem;
+}
+
+.hero-actions {
+    margin-top: 2rem;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1rem 1.5rem;
+}
+
+.delivery-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.95rem;
+    color: v.$texto-suave;
+
+    strong {
+        color: v.$cafe;
+    }
+}
+
+.delivery-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: v.$brasa;
+    animation: pulse 2s ease-out infinite;
+}
+
+@keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(185, 71, 42, 0.45); }
+    100% { box-shadow: 0 0 0 10px rgba(185, 71, 42, 0); }
+}
+
+.hero-photo {
+    position: relative;
+    margin: 0;
+    width: 100%;
+    max-width: 600px;
+    justify-self: end;
+    animation: photo-in 0.9s cubic-bezier(0.2, 0.8, 0.2, 1) 0.2s both;
+
+    img {
+        width: 100%;
+        height: auto;
+        aspect-ratio: 4 / 3;
+        object-fit: cover;
+        border-radius: v.$radio-grande;
+        box-shadow: 0 24px 48px -20px rgba(59, 42, 29, 0.35);
+    }
+
+}
+
+.sticker-hero {
+    width: 128px;
+    height: 128px;
+    left: -12px;
+    bottom: -18px;
+    transform: rotate(-10deg);
+    font-size: 1.05rem;
+    animation: stamp 0.6s cubic-bezier(0.2, 1.4, 0.4, 1) 0.9s both;
+
+    .sticker-big {
+        font-size: 2.3rem;
+    }
+
+    @include m.tablet {
+        width: 148px;
+        height: 148px;
+        left: -40px;
+
+        .sticker-big {
+            font-size: 2.7rem;
+        }
+    }
+}
+
+@keyframes photo-in {
+    from {
+        opacity: 0;
+        transform: translateX(40px) rotate(2deg);
+    }
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+@keyframes stamp {
+    from {
+        opacity: 0;
+        transform: rotate(-30deg) scale(1.6);
+    }
+    to {
+        opacity: 1;
+        transform: rotate(-10deg) scale(1);
+    }
+}

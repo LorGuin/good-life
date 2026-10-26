@@ -1,0 +1,735 @@
+@use '../base/variables' as v;
+@use '../base/mixins' as m;
+
+.admin-dialog {
+    width: 100%;
+    max-width: 100%;
+    height: 100%;
+    max-height: 100%;
+    margin: 0;
+    padding: 0;
+    border: none;
+    background: v.$papel;
+    color: v.$cafe;
+
+    &[open] {
+        display: flex;
+        flex-direction: column;
+    }
+
+    &::backdrop {
+        background: rgba(59, 42, 29, 0.45);
+    }
+
+    @include m.tablet {
+        width: min(100% - 3rem, 1000px);
+        height: min(100% - 3rem, 880px);
+        margin: auto;
+        border-radius: v.$radio;
+        box-shadow: 0 24px 64px rgba(59, 42, 29, 0.3);
+    }
+
+    h3 {
+        font-family: v.$fuente;
+        font-weight: 700;
+        font-size: 1.05rem;
+    }
+
+    label {
+        display: grid;
+        gap: 0.3rem;
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: v.$texto-suave;
+        flex: 1 1 140px;
+    }
+
+    input,
+    textarea {
+        width: 100%;
+        padding: 0.7rem 0.85rem;
+        border: 1.5px solid v.$borde;
+        border-radius: v.$radio-chico;
+        background: v.$blanco;
+        font: inherit;
+        font-size: 1rem;
+        font-weight: 400;
+        color: v.$cafe;
+
+        &:focus {
+            outline: none;
+            border-color: v.$oliva;
+        }
+    }
+
+    textarea {
+        resize: vertical;
+        min-height: 72px;
+    }
+
+    > #admin-content:not([hidden]) {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+        min-height: 0;
+    }
+}
+
+.admin-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.75rem 0.75rem 0.75rem 1.5rem;
+    background: v.$blanco;
+    border-bottom: 1px solid v.$borde;
+
+    h2 {
+        font-size: 1.4rem;
+    }
+}
+
+.admin-header-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.admin-body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 1.5rem;
+
+    @include m.tablet {
+        padding: 1.75rem 2rem 2rem;
+    }
+}
+
+.admin-login {
+    max-width: 420px;
+    width: 100%;
+    margin: 0 auto;
+    flex: none;
+}
+
+// Pestañas
+.admin-tabs {
+    display: flex;
+    gap: 0.25rem;
+    padding: 0 1rem;
+    background: v.$blanco;
+    border-bottom: 1px solid v.$borde;
+    overflow-x: auto;
+    scrollbar-width: none;
+
+    button {
+        position: relative;
+        flex: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        padding: 0.9rem 0.85rem;
+        border: none;
+        background: none;
+        font: inherit;
+        font-weight: 600;
+        color: v.$texto-suave;
+        cursor: pointer;
+
+        &::after {
+            content: "";
+            position: absolute;
+            left: 0.6rem;
+            right: 0.6rem;
+            bottom: -1px;
+            height: 3px;
+            border-radius: 3px 3px 0 0;
+            background: v.$oliva;
+            transform: scaleX(0);
+            transition: transform 0.2s ease;
+        }
+
+        &[aria-selected="true"] {
+            color: v.$cafe;
+
+            &::after {
+                transform: scaleX(1);
+            }
+        }
+    }
+}
+
+.tab-badge {
+    min-width: 22px;
+    height: 22px;
+    padding: 0 0.35rem;
+    display: inline-grid;
+    place-items: center;
+    border-radius: 999px;
+    background: v.$sticker;
+    color: v.$cafe;
+    font-size: 0.75rem;
+    font-weight: 700;
+}
+
+.admin-form {
+    display: grid;
+    gap: 0.85rem;
+}
+
+.form-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+}
+
+.form-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+}
+
+.form-error {
+    color: v.$peligro;
+    font-size: 0.9rem;
+}
+
+.btn-sm {
+    min-height: 38px;
+    padding: 0.45rem 1rem;
+    font-size: 0.9rem;
+}
+
+.btn-link.danger {
+    color: v.$peligro;
+}
+
+.empty {
+    padding: 2rem 0;
+}
+
+// ---------- Resumen ----------
+.period-bar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem 1.5rem;
+    margin-bottom: 1.25rem;
+}
+
+.period-label {
+    font-family: v.$fuente-titulos;
+    font-size: 1.35rem;
+}
+
+.segmented {
+    display: inline-flex;
+    padding: 4px;
+    border-radius: 999px;
+    background: v.$miel;
+
+    button {
+        border: none;
+        background: none;
+        padding: 0.5rem 1.1rem;
+        border-radius: 999px;
+        font: inherit;
+        font-weight: 600;
+        font-size: 0.95rem;
+        color: v.$texto-suave;
+        cursor: pointer;
+        transition: background-color 0.2s, color 0.2s;
+
+        &[aria-pressed="true"] {
+            background: v.$blanco;
+            color: v.$cafe;
+            box-shadow: 0 2px 6px rgba(59, 42, 29, 0.12);
+        }
+    }
+}
+
+.kpis {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+
+    @include m.desktop {
+        grid-template-columns: 1.4fr repeat(3, 1fr);
+    }
+}
+
+.kpi {
+    padding: 1rem 1.1rem;
+    border-radius: v.$radio;
+    background: v.$blanco;
+    border: 1px solid v.$borde;
+    display: grid;
+    gap: 0.2rem;
+    align-content: start;
+}
+
+.kpi-main {
+    grid-column: 1 / -1;
+    background: v.$miel;
+    border-color: transparent;
+
+    .kpi-value {
+        font-size: 2.4rem;
+    }
+
+    @include m.desktop {
+        grid-column: auto;
+    }
+}
+
+// En celular, el último indicador ocupa todo el ancho para no dejar un hueco
+.kpi:nth-child(4) {
+    grid-column: 1 / -1;
+
+    @include m.desktop {
+        grid-column: auto;
+    }
+}
+
+.kpi-label {
+    font-size: 0.9rem;
+    color: v.$texto-suave;
+}
+
+.kpi-value {
+    font-family: v.$fuente-titulos;
+    font-size: 1.9rem;
+    line-height: 1.1;
+}
+
+.kpi-delta {
+    font-size: 0.85rem;
+    color: v.$texto-suave;
+
+    &.up {
+        color: v.$oliva;
+        font-weight: 600;
+    }
+    &.down {
+        color: v.$peligro;
+        font-weight: 600;
+    }
+}
+
+.kpi-pending {
+    grid-column: 1 / -1;
+    text-align: left;
+    padding: 0.8rem 1.1rem;
+    border: none;
+    border-radius: v.$radio-chico;
+    background: rgba(242, 181, 68, 0.25);
+    font: inherit;
+    font-weight: 600;
+    color: v.$cafe;
+    cursor: pointer;
+
+    &::after {
+        content: "Ver pedidos";
+        margin-left: 0.5rem;
+        color: v.$oliva;
+        text-decoration: underline;
+    }
+}
+
+.chart-card {
+    padding: 1.1rem 1.1rem 1rem;
+    border-radius: v.$radio;
+    background: v.$blanco;
+    border: 1px solid v.$borde;
+    margin-bottom: 1rem;
+
+    h3 {
+        margin-bottom: 1rem;
+    }
+}
+
+// Gráfico de barras (una serie, sin leyenda: el título la nombra)
+.bar-chart {
+    position: relative;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0.6rem;
+}
+
+.chart-empty {
+    grid-column: 1 / -1;
+    padding: 2.5rem 0;
+    text-align: center;
+}
+
+.bar-scale {
+    height: 180px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    font-size: 0.75rem;
+    color: v.$texto-suave;
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+}
+
+.bars {
+    display: flex;
+    gap: 2px;
+    min-width: 0;
+}
+
+.bar-col {
+    flex: 1;
+    min-width: 0;
+    display: grid;
+    grid-template-rows: 180px auto;
+    gap: 0.35rem;
+    cursor: default;
+    border-radius: 6px;
+
+    &:hover .bar,
+    &:focus-visible .bar {
+        background: v.$oliva-hover;
+    }
+}
+
+.bar-track {
+    display: flex;
+    align-items: flex-end;
+    border-bottom: 1px solid v.$borde;
+    background: linear-gradient(to bottom, v.$borde 1px, transparent 1px) top / 100% 50%;
+}
+
+.bar {
+    width: 100%;
+    max-width: 44px;
+    margin: 0 auto;
+    background: v.$oliva;
+    border-radius: 4px 4px 0 0;
+    transition: height 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+    animation: grow 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+    transform-origin: bottom;
+}
+
+@keyframes grow {
+    from { transform: scaleY(0); }
+}
+
+.bar-label {
+    font-size: 0.72rem;
+    color: v.$texto-suave;
+    text-align: center;
+    white-space: nowrap;
+}
+
+// En el mes hay hasta 31 barras: mostramos solo algunas etiquetas
+.bar-chart[data-period="mes"] .bar-col:not(:nth-child(5n)):not(:first-child) .bar-label {
+    visibility: hidden;
+}
+
+.chart-tip {
+    position: absolute;
+    top: -0.5rem;
+    transform: translate(-50%, -100%);
+    max-width: 220px;
+    padding: 0.45rem 0.7rem;
+    border-radius: 8px;
+    background: v.$cafe;
+    color: v.$blanco;
+    font-size: 0.8rem;
+    line-height: 1.35;
+    text-align: center;
+    pointer-events: none;
+    z-index: 2;
+}
+
+.top-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    gap: 0.5rem;
+
+    li {
+        display: flex;
+        justify-content: space-between;
+        gap: 1rem;
+        padding-bottom: 0.5rem;
+        border-bottom: 1px solid v.$borde;
+
+        &:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+    }
+}
+
+// ---------- Pedidos ----------
+.toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    margin-bottom: 1.25rem;
+}
+
+.toolbar-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    align-items: center;
+
+    input[type="search"] {
+        width: auto;
+        min-width: 240px;
+        padding: 0.55rem 0.85rem;
+    }
+}
+
+.chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+
+    button {
+        border: 1.5px solid v.$borde;
+        background: v.$blanco;
+        border-radius: 999px;
+        padding: 0.4rem 0.9rem;
+        font: inherit;
+        font-size: 0.9rem;
+        font-weight: 600;
+        color: v.$texto-suave;
+        cursor: pointer;
+
+        &[aria-pressed="true"] {
+            background: v.$cafe;
+            border-color: v.$cafe;
+            color: v.$blanco;
+        }
+    }
+}
+
+.manual-sale {
+    padding: 1.25rem;
+    margin-bottom: 1.25rem;
+    border-radius: v.$radio;
+    background: v.$blanco;
+    border: 1.5px solid v.$sticker;
+    animation: rise 0.3s ease both;
+}
+
+.ms-products {
+    display: grid;
+    gap: 0.5rem;
+}
+
+.ms-product {
+    display: flex !important;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.5rem 0.75rem;
+    border-radius: v.$radio-chico;
+    background: v.$miel;
+    font-size: 0.95rem !important;
+    color: v.$cafe !important;
+
+    input {
+        width: 90px !important;
+        text-align: center;
+    }
+}
+
+.ms-total strong {
+    font-family: v.$fuente-titulos;
+    font-weight: 400;
+    font-size: 1.4rem;
+}
+
+.orders-list {
+    display: grid;
+    gap: 0.75rem;
+}
+
+.order-row {
+    display: grid;
+    gap: 0.75rem;
+    padding: 1rem 1.1rem;
+    border-radius: v.$radio;
+    background: v.$blanco;
+    border: 1px solid v.$borde;
+    border-left: 4px solid v.$borde;
+
+    &[data-status="pendiente"] {
+        border-left-color: v.$sticker;
+    }
+    &[data-status="confirmado"] {
+        border-left-color: v.$oliva;
+    }
+    &[data-status="cancelado"] {
+        opacity: 0.7;
+    }
+
+    @include m.tablet {
+        grid-template-columns: 1fr auto;
+        align-items: start;
+    }
+
+    p + p {
+        margin-top: 0.2rem;
+    }
+
+    .muted {
+        font-size: 0.85rem;
+    }
+}
+
+.order-who {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem 0.75rem;
+    align-items: baseline;
+
+    a {
+        color: v.$oliva;
+        font-weight: 600;
+        font-size: 0.95rem;
+    }
+}
+
+.order-side {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem 0.75rem;
+
+    @include m.tablet {
+        flex-direction: column;
+        align-items: flex-end;
+    }
+}
+
+.order-total {
+    font-family: v.$fuente-titulos;
+    font-weight: 400;
+    font-size: 1.35rem;
+}
+
+.order-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.4rem 0.75rem;
+}
+
+.status-pill {
+    display: inline-block;
+    padding: 0.2rem 0.65rem;
+    border-radius: 999px;
+    font-size: 0.78rem;
+    font-weight: 700;
+
+    &.status-pendiente {
+        background: rgba(242, 181, 68, 0.3);
+        color: v.$cafe;
+    }
+    &.status-confirmado {
+        background: rgba(75, 107, 47, 0.15);
+        color: v.$oliva;
+    }
+    &.status-cancelado {
+        background: v.$peligro-fondo;
+        color: v.$peligro;
+    }
+}
+
+// ---------- Clientes ----------
+.customers-count {
+    font-size: 1.05rem;
+
+    strong {
+        font-family: v.$fuente-titulos;
+        font-weight: 400;
+        font-size: 1.6rem;
+    }
+}
+
+.customers-list {
+    display: grid;
+}
+
+.customer-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.35rem 1rem;
+    padding: 0.9rem 0;
+    border-bottom: 1px solid v.$borde;
+    font-size: 0.95rem;
+
+    > span[data-label]::before {
+        content: attr(data-label) ": ";
+        color: v.$texto-suave;
+    }
+
+    @include m.tablet {
+        grid-template-columns: 2.2fr 0.8fr 0.8fr 1fr 1.2fr;
+        align-items: center;
+
+        > span[data-label]::before {
+            content: none;
+        }
+    }
+}
+
+.customer-head {
+    display: none;
+    font-size: 0.8rem;
+    color: v.$texto-suave;
+    padding-top: 0;
+
+    @include m.tablet {
+        display: grid;
+    }
+}
+
+.customer-id {
+    grid-column: 1 / -1;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.2rem 0.75rem;
+
+    a {
+        color: v.$oliva;
+        font-weight: 600;
+    }
+
+    @include m.tablet {
+        grid-column: auto;
+    }
+}
+
+// ---------- Productos ----------
+.list-title {
+    margin: 2rem 0 0.75rem;
+}
+
+.admin-product-list {
+    display: grid;
+    gap: 0.6rem;
+}
+
+.admin-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 0.9rem;
+    border-radius: v.$radio-chico;
+    background: v.$miel;
+}

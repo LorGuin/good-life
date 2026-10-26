@@ -1,37 +1,329 @@
-@use 'variables' as v; 
+@use 'variables' as v;
+@use 'mixins' as m;
 
 html {
-    font-size: 62.5%;
     box-sizing: border-box;
+    scroll-behavior: smooth;
+    scroll-padding-top: 5rem;
 }
-*, *:before, *:after {
+*, *::before, *::after {
     box-sizing: inherit;
 }
-  
+
 body {
-    background-color: v.$grisClaro;
-    font-family: v.$fuentePrincipal;
-    font-size: 1.6rem;
+    margin: 0;
+    font-family: v.$fuente;
+    font-size: 1.0625rem;
+    line-height: 1.55;
+    background-color: v.$papel;
+    color: v.$cafe;
+    -webkit-font-smoothing: antialiased;
+    -webkit-tap-highlight-color: transparent;
+
+    &.no-scroll {
+        overflow: hidden;
+    }
+    &.has-cart {
+        padding-bottom: 5rem;
+        @include m.tablet {
+            padding-bottom: 0;
+        }
+    }
+}
+
+h1, h2, h3 {
+    font-family: v.$fuente-titulos;
+    font-weight: 400;
+    line-height: 1.1;
+    margin: 0;
+    text-wrap: balance;
 }
 
 p {
-    font-size: 2rem;
+    margin: 0;
 }
-[class$="contenedor"],
-.contenedor {
-    width: 95%;
-    max-width: 1200px;
-    margin: 0 auto;
-}
+
 img {
     max-width: 100%;
     display: block;
 }
-ul {
-    padding:0;
-    list-style: none;
-    margin: 0;
+
+a {
+    color: inherit;
 }
-.seccion {
-    padding: 8rem 0;
+
+[hidden] {
+    display: none !important;
+}
+
+:focus-visible {
+    outline: 3px solid v.$brasa;
+    outline-offset: 2px;
+}
+
+.container {
+    width: 100%;
+    max-width: 1140px;
+    margin: 0 auto;
+    padding: 0 1.25rem;
+
+    @include m.tablet {
+        padding: 0 2rem;
+    }
+}
+
+.muted {
+    color: v.$texto-suave;
+    font-size: 0.9rem;
+}
+
+// ---------- Botones ----------
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    min-height: 48px;
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 999px;
+    font-family: v.$fuente;
+    font-size: 1rem;
+    font-weight: 700;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.1s;
+
+    &:active {
+        transform: scale(0.98);
+    }
+}
+
+.btn-primary {
+    background: v.$oliva;
+    color: v.$blanco;
+    box-shadow: 0 6px 16px -8px rgba(75, 107, 47, 0.7);
+    transition: background-color 0.2s, transform 0.2s, box-shadow 0.2s;
+
+    &:hover {
+        background: v.$oliva-hover;
+        transform: translateY(-2px);
+        box-shadow: 0 10px 20px -8px rgba(75, 107, 47, 0.7);
+    }
+    &:active {
+        transform: translateY(0) scale(0.98);
+    }
+}
+
+.btn-light {
+    background: v.$blanco;
+    color: v.$oliva;
+
+    &:hover {
+        background: v.$miel;
+    }
+}
+
+.btn-ghost {
+    background: transparent;
+    color: v.$oliva;
+    box-shadow: inset 0 0 0 2px v.$oliva;
+
+    &:hover {
+        background: v.$miel;
+    }
+}
+
+.btn-block {
+    width: 100%;
+}
+
+.btn-link {
+    background: none;
+    border: none;
+    padding: 0.25rem;
+    font: inherit;
+    font-size: 0.9rem;
+    color: v.$texto-suave;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    cursor: pointer;
+}
+
+.btn-danger {
+    background: v.$peligro-fondo;
+    color: v.$peligro;
+    border: none;
+    padding: 0.45rem 0.9rem;
+    border-radius: 999px;
+    font: inherit;
+    font-size: 0.85rem;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.icon-btn {
+    width: 40px;
+    height: 40px;
+    display: inline-grid;
+    place-items: center;
+    border: none;
+    border-radius: 50%;
+    background: transparent;
+    color: v.$texto-suave;
+    font-size: 1.05rem;
+    cursor: pointer;
+
+    &:hover {
+        background: v.$miel;
+    }
+}
+
+// ---------- Rótulo redondo (como el de las bandejas) ----------
+.sticker {
+    position: absolute;
+    display: grid;
+    place-content: center;
+    text-align: center;
+    border-radius: 50%;
+    background: v.$sticker;
+    color: v.$cafe;
+    border: 3px solid v.$blanco;
+    box-shadow: 0 6px 18px rgba(59, 42, 29, 0.18);
+    line-height: 1;
+
+    .sticker-big {
+        font-family: v.$fuente-titulos;
+    }
+    .sticker-small {
+        font-size: 0.75em;
+        font-weight: 600;
+        margin-top: 0.25em;
+    }
+}
+
+// ---------- Selector de cantidad ----------
+.stepper {
+    display: inline-flex;
+    align-items: center;
+    border: 1.5px solid v.$borde;
+    border-radius: 999px;
+    background: v.$blanco;
+
+    button {
+        width: 44px;
+        height: 44px;
+        border: none;
+        background: none;
+        border-radius: 50%;
+        font-size: 1.25rem;
+        color: v.$oliva;
+        cursor: pointer;
+
+        &:hover:not(:disabled) {
+            background: v.$miel;
+        }
+        &:disabled {
+            opacity: 0.35;
+            cursor: not-allowed;
+        }
+    }
+
+    input,
+    .stepper-value {
+        width: 2.25rem;
+        border: none;
+        background: none;
+        text-align: center;
+        font: inherit;
+        font-weight: 700;
+        appearance: textfield;
+        -moz-appearance: textfield;
+
+        &::-webkit-outer-spin-button,
+        &::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+    }
+}
+
+.stepper-sm button {
+    width: 36px;
+    height: 36px;
+    font-size: 1.1rem;
+}
+
+// ---------- Aviso flotante ----------
+.toast {
+    position: fixed;
+    left: 50%;
+    top: 5rem;
+    z-index: 600;
+    transform: translate(-50%, -0.75rem);
+    max-width: calc(100% - 2rem);
+    background: v.$cafe;
+    color: v.$blanco;
+    padding: 0.75rem 1.2rem;
+    border-radius: 999px;
+    font-size: 0.95rem;
+    box-shadow: 0 8px 24px rgba(59, 42, 29, 0.25);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s, transform 0.2s;
+
+    &.visible {
+        opacity: 1;
+        transform: translate(-50%, 0);
+    }
+    &[data-type="error"] {
+        background: v.$peligro;
+    }
+}
+
+// ---------- Animaciones ----------
+
+// Aparición al hacer scroll (solo si hay JS y el usuario no pidió menos movimiento)
+.motion [data-reveal] {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+    transition-delay: calc(var(--i, 0) * 110ms);
+}
+.motion [data-reveal].is-visible {
+    opacity: 1;
+    transform: none;
+}
+
+// Bolita que vuela hasta el pedido al agregar
+.fly-dot {
+    position: fixed;
+    z-index: 700;
+    width: 22px;
+    height: 22px;
+    margin: -11px 0 0 -11px;
+    border-radius: 50%;
+    background: v.$sticker;
+    border: 2px solid v.$blanco;
+    box-shadow: 0 4px 12px rgba(59, 42, 29, 0.3);
+    pointer-events: none;
+}
+
+@keyframes rise {
+    from {
+        opacity: 0;
+        transform: translateY(24px);
+    }
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
 }

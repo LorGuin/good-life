@@ -1,0 +1,24 @@
+# Configuración de Netlify para Good Life
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "22"
+
+# Archivos con nombre único (código compilado): se guardan en caché por un año
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/imagenes/*"
+  [headers.values]
+    Cache-Control = "public, max-age=604800"
+
+# El panel no se indexa en buscadores
+[[headers]]
+  for = "/admin*"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow"

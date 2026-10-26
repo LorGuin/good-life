@@ -1,0 +1,59 @@
+rules_version = '2';
+
+// Reglas de seguridad de Firestore para Good Life.
+// Copiar y pegar en: Consola de Firebase > Firestore Database > Reglas > Publicar.
+// El UID del admin va entre comillas simples (Authentication > Users).
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function isAdmin() {
+      return request.auth != null && request.auth.uid == '6rLxmDg027c8gGcij1cdsxRuaC53';
+    }
+
+    // Catálogo: lo ve cualquiera, solo el admin lo modifica
+    match /products/{productId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // Fotos de los productos (guardadas aparte para que la tienda cargue rápido)
+    match /productImages/{productId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // Configuración (día de reparto): la ve cualquiera, solo el admin la cambia
+    match /settings/{docId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // Producción (tandas, insumos y costos): privado, solo el admin
+    match /batches/{batchId} {
+      allow read, write: if isAdmin();
+    }
+
+    // Pedidos: los clientes solo pueden CREAR un pedido nuevo (y bien formado).
+    // Nadie más que el admin puede leer, editar o borrar pedidos y teléfonos.
+    match /orders/{orderId} {
+      allow read, update, delete: if isAdmin();
+      allow create: if isAdmin() || isValidWebOrder(request.resource.data);
+    }
+
+    function isValidWebOrder(o) {
+      return o.keys().hasOnly(['customerName', 'phone', 'items', 'total', 'trays',
+                               'deliveryText', 'status', 'source', 'createdAt'])
+        && o.customerName is string && o.customerName.size() > 0 && o.customerName.size() <= 80
+        && o.phone is string && o.phone.matches('^[0-9]{8,15}$')
+        && o.items is list && o.items.size() > 0 && o.items.size() <= 30
+        && o.total is number && o.total >= 0
+        && o.trays is number && o.trays > 0 && o.trays <= 1500
+        && o.deliveryText is string && o.deliveryText.size() <= 80
+        && o.status == 'pendiente'
+        && o.source == 'web'
+        && o.createdAt == request.time;
+    }
+
+    // Todo lo demás queda bloqueado por defecto
+  }
+}

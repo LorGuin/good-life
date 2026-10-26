@@ -1,0 +1,130 @@
+@use '../base/variables' as v;
+@use '../base/mixins' as m;
+
+.catalog-section {
+    padding: 4.5rem 0 5rem;
+}
+
+.section-head {
+    margin-bottom: 2.25rem;
+    max-width: 36rem;
+
+    h2 {
+        font-size: clamp(2rem, 5vw, 2.8rem);
+    }
+    p {
+        margin-top: 0.6rem;
+        color: v.$texto-suave;
+    }
+}
+
+.catalog {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 2rem 1.5rem;
+}
+
+.catalog-status {
+    color: v.$texto-suave;
+    padding: 2rem 0;
+}
+
+.product-card {
+    display: flex;
+    flex-direction: column;
+
+    &:hover {
+        .product-photo img {
+            transform: scale(1.04);
+        }
+        .sticker-card {
+            transform: rotate(-6deg) scale(1.06);
+        }
+    }
+}
+
+.product-photo {
+    position: relative;
+    margin-bottom: 1.25rem;
+
+    // Recorta el zoom de la foto sin cortar el rótulo
+    .product-photo-frame {
+        overflow: hidden;
+        border-radius: v.$radio;
+    }
+
+    img,
+    .product-photo-empty {
+        width: 100%;
+        aspect-ratio: 4 / 3;
+        object-fit: cover;
+        background: v.$miel;
+        transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+
+    .product-photo-empty {
+        display: grid;
+        place-items: center;
+
+        .bird {
+            width: 72px;
+            fill: v.$sticker;
+        }
+        .bird-eye { fill: v.$miel; }
+        .bird-wing { stroke: v.$miel; }
+        .bird-legs { stroke: v.$sticker; }
+    }
+}
+
+.sticker-card {
+    width: 86px;
+    height: 86px;
+    right: 12px;
+    bottom: -20px;
+    transform: rotate(8deg);
+    font-size: 0.85rem;
+    transition: transform 0.35s cubic-bezier(0.2, 1.4, 0.4, 1);
+
+    .sticker-big {
+        font-size: 1.55rem;
+    }
+}
+
+.product-body {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+
+    h3 {
+        font-size: 1.5rem;
+        padding-right: 90px; // lugar para el rótulo
+    }
+}
+
+.product-desc {
+    margin-top: 0.5rem;
+    color: v.$texto-suave;
+}
+
+.product-price {
+    margin-top: auto;
+    padding-top: 1rem;
+    font-family: v.$fuente-titulos;
+    font-size: 1.6rem;
+
+    span {
+        font-family: v.$fuente;
+        font-size: 0.9rem;
+        color: v.$texto-suave;
+    }
+}
+
+.product-actions {
+    margin-top: 0.9rem;
+    display: flex;
+    gap: 0.75rem;
+
+    .btn {
+        flex: 1;
+    }
+}

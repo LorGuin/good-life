@@ -1,0 +1,181 @@
+@use '../base/variables' as v;
+@use '../base/mixins' as m;
+
+// Barra inferior (solo celular)
+.cart-bar {
+    position: fixed;
+    left: 1rem;
+    right: 1rem;
+    bottom: 1rem;
+    z-index: 200;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    min-height: 56px;
+    padding: 0 1.4rem;
+    border: none;
+    border-radius: 999px;
+    background: v.$oliva;
+    color: v.$blanco;
+    font: inherit;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 12px 28px -8px rgba(59, 42, 29, 0.5);
+
+    @include m.tablet {
+        display: none !important;
+    }
+}
+
+.cart-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 300;
+    background: rgba(59, 42, 29, 0.4);
+}
+
+.cart-drawer {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 400;
+    width: 100%;
+    max-width: 420px;
+    background: v.$blanco;
+    display: flex;
+    flex-direction: column;
+    transform: translateX(100%);
+    visibility: hidden;
+    transition: transform 0.28s ease, visibility 0.28s;
+
+    &.open {
+        transform: translateX(0);
+        visibility: visible;
+    }
+}
+
+.cart-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 1rem 1rem 1.5rem;
+    border-bottom: 1px solid v.$borde;
+
+    h2 {
+        font-size: 1.6rem;
+    }
+}
+
+.cart-items {
+    flex: 1;
+    overflow-y: auto;
+    padding: 0.5rem 1.5rem;
+}
+
+.cart-empty {
+    padding: 3rem 0;
+    display: grid;
+    gap: 1rem;
+    justify-items: start;
+    color: v.$texto-suave;
+}
+
+.cart-item {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 0.75rem;
+    align-items: center;
+    padding: 1.1rem 0;
+    border-bottom: 1px solid v.$borde;
+
+    .cart-item-info {
+        display: grid;
+        gap: 0.1rem;
+    }
+    .stepper {
+        justify-self: start;
+    }
+    .cart-remove {
+        align-self: start;
+        margin: -0.4rem -0.6rem 0 0;
+    }
+}
+
+.cart-subtotal {
+    justify-self: end;
+    font-weight: 700;
+}
+
+.cart-footer {
+    padding: 1.25rem 1.5rem 1.5rem;
+    border-top: 1px solid v.$borde;
+    background: v.$miel;
+    display: grid;
+    gap: 0.75rem;
+
+    .btn-link {
+        justify-self: center;
+    }
+}
+
+.cart-delivery {
+    font-size: 0.95rem;
+    color: v.$texto-suave;
+}
+
+.cart-total {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    font-size: 1.1rem;
+
+    strong {
+        font-family: v.$fuente-titulos;
+        font-weight: 400;
+        font-size: 1.8rem;
+    }
+}
+
+// Datos del cliente en el carrito
+.checkout-fields {
+    display: grid;
+    gap: 0.6rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px dashed v.$borde;
+
+    label {
+        display: grid;
+        gap: 0.25rem;
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: v.$texto-suave;
+    }
+
+    input {
+        width: 100%;
+        padding: 0.65rem 0.85rem;
+        border: 1.5px solid v.$borde;
+        border-radius: v.$radio-chico;
+        background: v.$blanco;
+        font: inherit;
+        font-size: 1rem;
+        color: v.$cafe;
+
+        &:focus {
+            outline: none;
+            border-color: v.$oliva;
+        }
+    }
+
+    .form-error {
+        color: v.$peligro;
+        font-size: 0.85rem;
+    }
+}
+
+.checkout-note {
+    font-size: 0.78rem;
+    color: v.$texto-suave;
+}
